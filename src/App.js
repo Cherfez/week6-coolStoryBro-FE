@@ -12,15 +12,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectAppLoading } from "./store/appState/selectors";
 import { getUserWithStoredToken } from "./store/user/actions";
 import { Jumbotron } from "react-bootstrap";
+import Homepage from "./pages/Homepage/index";
 
 const Home = () => (
-  <Jumbotron>
-    <h1>Home</h1>
-  </Jumbotron>
+  <div>
+    <Jumbotron>
+      <h1>Homepages</h1>
+    </Jumbotron>
+    <Homepage />
+  </div>
 );
 const Other = () => (
   <Jumbotron>
-    <h1>Other</h1>
+    <h1>My Page</h1>
   </Jumbotron>
 );
 
