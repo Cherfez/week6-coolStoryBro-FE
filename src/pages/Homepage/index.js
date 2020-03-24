@@ -16,6 +16,7 @@ export default function HomePages() {
 
   return (
     <div>
+      {console.log(homepages)}
       {homepages.map(homepage => {
         return (
           <div
