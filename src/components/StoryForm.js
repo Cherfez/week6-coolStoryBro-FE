@@ -44,6 +44,11 @@ export default function StoryForm() {
             setImageUrl(event.target.value);
           }}
         />
+        {imageUrl ? (
+          <div className="mt-4" md={{ span: 8, offset: 2 }}>
+            <img src={imageUrl} alt="preview" thumbnail />
+          </div>
+        ) : null}
         <br />
         <input type="submit" value="submit" />
       </Form>

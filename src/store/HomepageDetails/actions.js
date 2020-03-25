@@ -49,3 +49,34 @@ export function newStory(name, content, imageUrl) {
     }
   };
 }
+
+export function editPage(title, description, backgroundColor, color) {
+  return async (dispatch, getState) => {
+    try {
+      const token = getState().user.token;
+      const response = await axios.patch(
+        `${apiUrl}/other`,
+        {
+          title,
+          description,
+          backgroundColor,
+          color
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+      dispatch(showMessageWithTimeout("success", false, "Updated!", 1500));
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.data.message);
+        dispatch(setMessage("danger", true, error.response.data.message));
+      } else {
+        console.log(error.message);
+        dispatch(setMessage("danger", true, error.message));
+      }
+    }
+  };
+}
