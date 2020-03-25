@@ -1,6 +1,6 @@
 import { apiUrl } from "../../config/constants";
 import axios from "axios";
-import { selectToken } from "./selectors";
+import { selectToken, selectUser } from "./selectors";
 import {
   appLoading,
   appDoneLoading,
@@ -11,6 +11,7 @@ import {
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const TOKEN_STILL_VALID = "TOKEN_STILL_VALID";
 export const LOG_OUT = "LOG_OUT";
+export const UPDATE_SUCCESS = "UPDATE_SUCCESS";
 
 const loginSuccess = userWithToken => {
   return {
@@ -23,6 +24,13 @@ const tokenStillValid = userWithoutToken => ({
   type: TOKEN_STILL_VALID,
   payload: userWithoutToken
 });
+
+const updateSuccess = userUpdate => {
+  return {
+    type: UPDATE_SUCCESS,
+    payload: userUpdate
+  };
+};
 
 export const logOut = () => ({ type: LOG_OUT });
 
@@ -107,5 +115,26 @@ export const getUserWithStoredToken = () => {
       dispatch(logOut());
       dispatch(appDoneLoading());
     }
+  };
+};
+
+export const updateMyPage = (title, description, backgroundColor, color) => {
+  return async (dispatch, getState) => {
+    const { homepage, token } = selectUser(getState());
+    const response = await axios.patch(
+      `${apiUrl}/other`,
+      {
+        title,
+        description,
+        backgroundColor,
+        color
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+    dispatch(updateSuccess(response.data));
   };
 };

@@ -2,13 +2,18 @@ import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import { useDispatch, useSelector } from "react-redux";
-import { editPage } from "../store/HomepageDetails/actions";
+import { updateMyPage } from "../store/user/actions";
+import { selectMyHomepage } from "../store/user/selectors";
 
 export default function EditForm() {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [backgroundColor, setBackgroundColor] = useState();
-  const [color, setColor] = useState();
+  const homepage = useSelector(selectMyHomepage);
+  console.log("???", homepage);
+  const [title, setTitle] = useState(homepage.title);
+  const [description, setDescription] = useState(homepage.description || "");
+  const [backgroundColor, setBackgroundColor] = useState(
+    homepage.backgroundColor
+  );
+  const [color, setColor] = useState(homepage.color);
 
   const dispatch = useDispatch();
 
@@ -16,7 +21,7 @@ export default function EditForm() {
     event.preventDefault();
     console.log(title, description, backgroundColor, color);
 
-    dispatch(editPage(title, description, backgroundColor, color));
+    dispatch(updateMyPage(title, description, backgroundColor, color));
   };
 
   return (
