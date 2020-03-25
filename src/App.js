@@ -14,6 +14,7 @@ import { getUserWithStoredToken } from "./store/user/actions";
 import { Jumbotron } from "react-bootstrap";
 import Homepage from "./pages/Homepage/index";
 import HomepageDetails from "./pages/HomepageDetails/index";
+import MyPage from "./pages/MyPage/index";
 
 const Home = () => (
   <div>
@@ -24,9 +25,12 @@ const Home = () => (
   </div>
 );
 const Other = () => (
-  <Jumbotron>
-    <h1>My Page</h1>
-  </Jumbotron>
+  <div>
+    <Jumbotron>
+      <h1>My Page</h1>
+    </Jumbotron>
+    <MyPage />
+  </div>
 );
 
 function App() {

@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 export default function HomePages() {
   const dispatch = useDispatch();
   const homepages = useSelector(selectHomepages);
-  //console.log("homepage", homepages);
+  console.log("homepage", homepages);
 
   useEffect(() => {
     dispatch(getHomepagesThunk());
@@ -16,7 +16,7 @@ export default function HomePages() {
 
   return (
     <div>
-      {console.log(homepages)}
+      {/* {console.log(homepages)} */}
       {homepages.map(homepage => {
         return (
           <div
