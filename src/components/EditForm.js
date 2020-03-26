@@ -7,7 +7,7 @@ import { selectMyHomepage } from "../store/user/selectors";
 
 export default function EditForm() {
   const homepage = useSelector(selectMyHomepage);
-  console.log("???", homepage);
+  //console.log("???", homepage);
   const [title, setTitle] = useState(homepage.title);
   const [description, setDescription] = useState(homepage.description || "");
   const [backgroundColor, setBackgroundColor] = useState(
@@ -19,7 +19,7 @@ export default function EditForm() {
 
   const submitHandle = event => {
     event.preventDefault();
-    console.log(title, description, backgroundColor, color);
+    //console.log(title, description, backgroundColor, color);
 
     dispatch(updateMyPage(title, description, backgroundColor, color));
   };
@@ -27,34 +27,36 @@ export default function EditForm() {
   return (
     <Container>
       <Form onSubmit={submitHandle}>
+        <label>Title</label>
         <input
           type="text"
           value={title}
-          placeholder="Title"
+          placeholder="What is your title?"
           onChange={event => {
             setTitle(event.target.value);
           }}
         />
+        <label>Description</label>
         <input
           type="text"
           value={description}
-          placeholder="Description"
+          placeholder="Something about you"
           onChange={event => {
             setDescription(event.target.value);
           }}
         />
+        <label>Background Color</label>
         <input
           type="color"
           value={backgroundColor}
-          placeholder="Background"
           onChange={event => {
             setBackgroundColor(event.target.value);
           }}
         />
+        <label>Text color</label>
         <input
           type="color"
           value={color}
-          placeholder="Text color"
           onChange={event => {
             setColor(event.target.value);
           }}

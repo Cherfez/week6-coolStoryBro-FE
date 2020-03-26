@@ -1,11 +1,5 @@
 import axios from "axios";
 import { apiUrl } from "../../config/constants";
-import {
-  appLoading,
-  appDoneLoading,
-  showMessageWithTimeout,
-  setMessage
-} from "../appState/actions";
 
 export function fetchHomepageById(homepageId) {
   return async function(dispatch, getState) {
@@ -18,65 +12,3 @@ export function fetchHomepageById(homepageId) {
     });
   };
 }
-
-export function newStory(name, content, imageUrl) {
-  return async (dispatch, getState) => {
-    try {
-      const token = getState().user.token;
-      const response = await axios.post(
-        `${apiUrl}/stories`,
-        {
-          name,
-          content,
-          imageUrl
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      );
-
-      dispatch(showMessageWithTimeout("success", false, "story posted!", 1500));
-    } catch (error) {
-      if (error.response) {
-        console.log(error.response.data.message);
-        dispatch(setMessage("danger", true, error.response.data.message));
-      } else {
-        console.log(error.message);
-        dispatch(setMessage("danger", true, error.message));
-      }
-    }
-  };
-}
-
-// export function editPage(title, description, backgroundColor, color) {
-//   return async (dispatch, getState) => {
-//     try {
-//       const token = getState().user.token;
-//       const response = await axios.patch(
-//         `${apiUrl}/other`,
-//         {
-//           title,
-//           description,
-//           backgroundColor,
-//           color
-//         },
-//         {
-//           headers: {
-//             Authorization: `Bearer ${token}`
-//           }
-//         }
-//       );
-//       dispatch(showMessageWithTimeout("success", false, "Updated!", 1500));
-//     } catch (error) {
-//       if (error.response) {
-//         console.log(error.response.data.message);
-//         dispatch(setMessage("danger", true, error.response.data.message));
-//       } else {
-//         console.log(error.message);
-//         dispatch(setMessage("danger", true, error.message));
-//       }
-//     }
-//   };
-// }

@@ -11,7 +11,7 @@ export default function HomepageDetails() {
   //console.log(id);
   const dispatch = useDispatch();
   const homepageDetails = useSelector(selectHomepageDetails);
-  console.log("details?", homepageDetails);
+  //console.log("details?", homepageDetails);
 
   useEffect(() => {
     dispatch(fetchHomepageById(id));
@@ -19,34 +19,19 @@ export default function HomepageDetails() {
 
   return (
     <Container>
-      {homepageDetails
-        ? homepageDetails.map(details => {
-            return (
-              <div key={details.id}>
-                <h3>{details.name}</h3>
-                <Card.Img
-                  variant="top"
-                  src={details.imageUrl}
-                  alt="something"
-                />
-                <p>{details.content}</p>
-              </div>
-            );
-          })
-        : null}
-      {/* {{ homepageDetails } ? (
-        <div>
-          <div
-            style={{
-              backgroundColor: homepageDetails.backgroundColor,
-              color: homepageDetails.color
-            }}
-          >
-            <h2>{homepageDetails.title}</h2>
-            <p>{homepageDetails.description}</p>
-          </div>
-        </div>
-      ) : null} */}
+      {homepageDetails ? (
+        homepageDetails.map(details => {
+          return (
+            <div key={details.id}>
+              <h3>{details.name}</h3>
+              <Card.Img variant="top" src={details.imageUrl} alt="something" />
+              <p>{details.content}</p>
+            </div>
+          );
+        })
+      ) : (
+        <h3>Nothing to show yet, Bro</h3>
+      )}
     </Container>
   );
 }

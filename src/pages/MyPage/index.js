@@ -1,22 +1,18 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import StoryForm from "../../components/StoryForm";
-import { selectToken } from "../../store/user/selectors";
 import { useSelector } from "react-redux";
 import EditForm from "../../components/EditForm";
 import { selectUser } from "../../store/user/selectors";
 import Loading from "../../components/Loading";
+import Container from "react-bootstrap/Container";
 
 export default function MyPage() {
   const [showForm, setShowForm] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
 
-  const { token, homepage, id } = useSelector(selectUser);
-  console.log("homepage?", homepage);
-
-  // const token = useSelector(selectToken);
-  // console.log("token", token);
+  const { homepage } = useSelector(selectUser);
+  //console.log("homepage?", homepage);
 
   function showStoryForm() {
     return (
@@ -63,6 +59,18 @@ export default function MyPage() {
       <div>
         <Button onClick={clickHandleEdit}>Edit your page, Bro</Button>
         {showEdit && showEditForm()}
+      </div>
+
+      <div>
+        {homepage.stories.map(story => {
+          return (
+            <Container key={story.id}>
+              <h3>{story.name}</h3>
+              <p>{story.content}</p>
+              <img src={story.imageUrl} />
+            </Container>
+          );
+        })}
       </div>
     </div>
   );

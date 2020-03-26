@@ -12,6 +12,7 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const TOKEN_STILL_VALID = "TOKEN_STILL_VALID";
 export const LOG_OUT = "LOG_OUT";
 export const UPDATE_SUCCESS = "UPDATE_SUCCESS";
+export const NEWSTORY_SUCCESS = "NEWSTORY_SUCCESS";
 
 const loginSuccess = userWithToken => {
   return {
@@ -29,6 +30,13 @@ const updateSuccess = userUpdate => {
   return {
     type: UPDATE_SUCCESS,
     payload: userUpdate
+  };
+};
+
+const newStorySuccess = story => {
+  return {
+    type: NEWSTORY_SUCCESS,
+    payload: story
   };
 };
 
@@ -120,7 +128,10 @@ export const getUserWithStoredToken = () => {
 
 export const updateMyPage = (title, description, backgroundColor, color) => {
   return async (dispatch, getState) => {
-    const { homepage, token } = selectUser(getState());
+    const { token } = selectUser(getState());
+    // const { homepage, token } = selectUser(getState());
+    dispatch(appLoading());
+
     const response = await axios.patch(
       `${apiUrl}/other`,
       {
@@ -135,6 +146,38 @@ export const updateMyPage = (title, description, backgroundColor, color) => {
         }
       }
     );
-    dispatch(updateSuccess(response.data));
+    dispatch(
+      showMessageWithTimeout("success", false, "update successfull", 3000)
+    );
+    dispatch(updateSuccess(response.data.homepage));
+    dispatch(appDoneLoading());
+  };
+};
+
+export const newStory = (name, content, imageUrl) => {
+  return async (dispatch, getState) => {
+    // const { homepage, token } = selectUser(getState());
+    const { token } = selectUser(getState());
+    //console.log(name, content, imageUrl);
+    dispatch(appLoading());
+
+    const response = await axios.post(
+      `${apiUrl}/stories`,
+      {
+        name,
+        content,
+        imageUrl
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+    dispatch(
+      showMessageWithTimeout("success", false, response.data.message, 3000)
+    );
+    dispatch(newStorySuccess(response.data.story));
+    dispatch(appDoneLoading());
   };
 };
